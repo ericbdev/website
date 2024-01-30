@@ -1,3 +1,38 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer components {
+  .layout--outer {
+    @apply max-w-screen-lg;
+    @apply mx-auto;
+    @apply py-2;
+    @apply px-4;
+    @apply relative;
+  }
+
+  .eb-logo {
+    z-index: 100;
+    transition: transform 0.3s ease;
+  }
+
+  .eb-logo path {
+    transform-origin: 50% 50%;
+    transition: transform 300ms ease-in-out, opacity 200ms linear;
+  }
+
+  .eb-logo.logo--short .logo--letter-1,
+  .eb-logo.logo--short .logo--letter-2,
+  .eb-logo.logo--short .logo--letter-3,
+  .eb-logo.logo--short .logo--letter-4 {
+    transform: translateX(60px);
+    opacity: 0;
+  }
+
+  .eb-logo.logo--short .logo--letter-5,
+  .eb-logo.logo--short .logo--letter-6,
+  .eb-logo.logo--short .logo--letter-7,
+  .eb-logo.logo--short .logo--letter-8 {
+    transform: translateX(-158px);
+  }
+}

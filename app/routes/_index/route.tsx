@@ -1,4 +1,7 @@
+import { lazy, Suspense } from "react";
 import type { V2_MetaFunction } from "@remix-run/node";
+
+const View = lazy(() => import("./View"));
 
 export const meta: V2_MetaFunction = () => [
   { title: "Home | Portfolio | @ericbdev (Eric B) " },
@@ -6,8 +9,8 @@ export const meta: V2_MetaFunction = () => [
 
 export default function Component() {
   return (
-    <div className="mx-auto max-w-screen-lg">
-      <h1 className="leading-1 text-6xl font-bold">Home</h1>
-    </div>
+    <Suspense>
+      <View />
+    </Suspense>
   );
 }
