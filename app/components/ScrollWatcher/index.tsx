@@ -3,7 +3,7 @@
 // https://codesandbox.io/s/sticky-sandbox-j5fr3?file=/src/index.js:437-443
 // https://dev.to/n8tb1t/tracking-scroll-position-with-react-hooks-3bbj
 
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useCallback, useState, useRef } from "react";
 import { useScrollPosition } from "@n8tb1t/use-scroll-position";
 import cx from "classnames";
 
@@ -36,36 +36,36 @@ type Props = {
     scrollParams: { pct: number };
   }) => JSX.Element;
   offset?: number;
-  height?: string;
+
   id: string;
 };
 
-const ScrollWatcher: React.FC<Props> = ({ children, height, id, offset }) => {
+const ScrollWatcher: React.FC<Props> = ({ children, id, offset }) => {
   const [scrollParams, setParams] = useState<{ pct: number }>(initParams);
   const ref = useRef(null);
   const boundsRect = getRectangle(ref.current);
 
-  // scroll monitoring
-  useScrollPosition(
-    ({ currPos = initPos }) => {
+  const cb = useCallback(
+    ({ currPos } = initPos) => {
       const { y } = currPos;
       const boundsHeight = boundsRect?.height || 0;
       const pct = getScrollPercentage(y, boundsHeight, offset) || 0;
 
       return setParams({ pct });
     },
-    [boundsRect, ref],
-    ref,
-    true,
-    null
+    [boundsRect, offset]
   );
+
+  useEffect(() => cb(initPos), []);
+
+  // scroll monitoring
+  useScrollPosition(cb, [cb, boundsRect, ref], ref, true, null);
 
   return (
     <div
-      className={cx(["relative", "w-full", "min-h-screen"])}
+      className={cx(["relative", "w-full", "min-h-screen", "h-[400vh]"])}
       ref={ref}
       id={id}
-      style={{ minHeight: height }}
     >
       {children({ scrollParams })}
     </div>

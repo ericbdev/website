@@ -1,5 +1,5 @@
 import cx from "classnames";
-import { NavLink } from "@remix-run/react";
+import { NavLink, useLocation } from "@remix-run/react";
 
 import { SELECTORS_HEADER } from "~/config/domSelectors";
 import { LogoShort } from "~/components/Logo/LogoShort";
@@ -32,12 +32,17 @@ const listClassNames = cx([
 ]);
 
 export function Header() {
+  const { pathname } = useLocation();
   return (
     <div className={wrapperClassNames}>
       <nav className={cx(innerClassNames)}>
         <LogoShort
           dataAttrs={{ [SELECTORS_HEADER.NAV_LOGO]: "" }}
-          className={cx(["h-logo-eb", "w-logo-eb--short"])}
+          className={cx([
+            "h-logo-eb",
+            "w-logo-eb--short",
+            pathname === "/" && "invisible",
+          ])}
         />
         <ul className={listClassNames}>
           <li>

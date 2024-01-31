@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React, { useMemo, useRef } from "react";
 import cx from "classnames";
 
 import { SELECTORS_HEADER } from "~/config/domSelectors";
@@ -27,7 +27,7 @@ const getPositionInitial = () => {
   };
 };
 
-function useDelta({
+function useStyles({
   pct,
   ref,
 }: {
@@ -46,37 +46,34 @@ function useDelta({
     return { x: isNaN(x) ? initParams.x : x, y: isNaN(y) ? initParams.y : y };
   }, [winSize, ref]);
 
-  // move X and Y based on scroll amount
-  const dX = useMemo(
-    () => getTrxDelta(src.x, destination.x, pct),
-    [src.x, destination.x, pct]
-  );
+  const transform = useMemo(() => {
+    const dY = getTrxDelta(src.y, destination.y, pct);
+    const dX = getTrxDelta(src.x, destination.x, pct);
 
-  const dY = useMemo(
-    () => getTrxDelta(src.y, destination.y, pct),
-    [src.y, destination.y, pct]
-  );
+    return `translate3d(${dX}px, ${dY}px, 0)`;
+  }, [src, destination, pct]);
 
-  return { dX, dY };
+  return { transform };
 }
 
 // moves a logo from a designated x/y coord to a final rect
-export const AnimatedLogo = React.forwardRef<{ pct: number }>(
-  ({ pct = 0 }, ref) => {
-    const { dX, dY } = useDelta({ pct, ref });
+const AnimatedLogo: React.FC<{ pct: number }> = ({ pct = 0 }) => {
+  const ref = useRef(null);
+  const styles = useStyles({ pct, ref });
 
-    return (
-      <LogoFull
-        ref={ref}
-        style={{ transform: `translate3d(${dX}px, ${dY}px, 0)` }}
-        className={cx([
-          pct > 0.5 && "logo--short",
-          "w-logo-eb--full",
-          "h-logo-eb",
-          "eb-logo",
-          "fixed",
-        ])}
-      />
-    );
-  }
-);
+  return (
+    <LogoFull
+      ref={ref}
+      style={styles}
+      className={cx([
+        pct > 0.5 && "logo--short",
+        "w-logo-eb--full",
+        "h-logo-eb",
+        "eb-logo",
+        "fixed",
+      ])}
+    />
+  );
+};
+
+export default AnimatedLogo;
