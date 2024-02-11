@@ -14,6 +14,14 @@ const config = {
   content: ["./app/**/*.{js,jsx,ts,tsx}"],
   theme: {
     extend: {
+      colors: {
+        accent: {
+          dark: "#178f95",
+          base: "#1eb9c1",
+          light: "#21ced7",
+          lighter: "#5fdfe6",
+        },
+      },
       height: {
         "logo-eb": LOGO_SIZES.full.height / 2,
       },

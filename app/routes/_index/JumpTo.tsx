@@ -17,7 +17,20 @@ export const JumpTo = ({
         opacity,
         transform,
       }}
-      className={cx(["fixed", "block", "bottom-8", "left-1/2"])}
+      className={cx([
+        "fixed",
+        "block",
+        "bottom-8",
+        "left-1/2",
+        "p-4",
+        "text-white",
+        "bg-accent-base",
+        "hover:bg-accent-dark",
+        'transition-colors',
+        'duration-300',
+        "rounded",
+        "font-bold",
+      ])}
       onClick={onClick}
     >
       Jump to content

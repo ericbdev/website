@@ -1,6 +1,8 @@
 import React, { useRef, lazy, Suspense, useCallback } from "react";
 import type { V2_MetaFunction } from "@remix-run/node";
 import cx from "classnames";
+import { GitHub, Twitter, Linkedin } from "react-feather";
+
 import withMounted from "~/components/withMounted";
 
 import AnimatedLogo from "./AnimatedLogo.client";
@@ -8,12 +10,18 @@ import { LinkList } from "./LinkList";
 import { JumpTo } from "./JumpTo";
 
 const Scroller = lazy(() => import("./Scroller"));
+const AnimatedLogoMounted = withMounted(AnimatedLogo);
+
+const iconLinkClassnames = cx([
+  "text-accent-base",
+  "hover:text-accent-dark",
+  "transition-colors",
+  "duration-300",
+]);
 
 export const meta: V2_MetaFunction = () => [
-  { title: "Home | Portfolio | @ericbdev (Eric B) " },
+  { title: "Home | Portfolio | @ericbdev (Eric B)" },
 ];
-
-const AnimatedLogoMounted = withMounted(AnimatedLogo);
 
 export default function Component() {
   const main = useRef(null);
@@ -39,20 +47,36 @@ export default function Component() {
               <>
                 <AnimatedLogoMounted pct={pct} />
 
-                <JumpTo
-                  variant="info"
-                  onClick={() => scrollToBottom()}
-                  scrollPct={pct}
-                >
-                  Jump to content
-                </JumpTo>
                 <LinkList scrollPct={pct}>
-                  <a href="https://github.com/ericbdev/">github</a>
-                  <a href="https://twitter.com/ericbdev">twitter</a>
-                  <a href="https://www.linkedin.com/in/eric-bright/">
-                    linkedin
+                  <a
+                    href="https://github.com/ericbdev/"
+                    target="_blank"
+                    rel="noreferrer"
+                    className={iconLinkClassnames}
+                  >
+                    <GitHub color="currentColor" size={28} />
+                  </a>
+                  <a
+                    href="https://twitter.com/ericbdev"
+                    target="_blank"
+                    rel="noreferrer"
+                    className={iconLinkClassnames}
+                  >
+                    <Twitter color="currentColor" size={28} />
+                  </a>
+                  <a
+                    href="https://www.linkedin.com/in/eric-bright/"
+                    target="_blank"
+                    rel="noreferrer"
+                    className={iconLinkClassnames}
+                  >
+                    <Linkedin color="currentColor" size={28} />
                   </a>
                 </LinkList>
+
+                <JumpTo onClick={() => scrollToBottom()} scrollPct={pct}>
+                  Jump to content
+                </JumpTo>
               </>
             )}
           </Scroller>
@@ -60,7 +84,6 @@ export default function Component() {
       </div>
       <div
         className={cx(["relative", "w-full", "min-h-screen", "snap-center"])}
-        id={"home--main"}
         ref={main}
       >
         <div
