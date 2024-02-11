@@ -1,6 +1,7 @@
 import React, { useRef, lazy, Suspense, useCallback } from "react";
 import type { V2_MetaFunction } from "@remix-run/node";
 import cx from "classnames";
+import withMounted from "~/components/withMounted";
 
 import AnimatedLogo from "./AnimatedLogo.client";
 import { LinkList } from "./LinkList";
@@ -12,12 +13,10 @@ export const meta: V2_MetaFunction = () => [
   { title: "Home | Portfolio | @ericbdev (Eric B) " },
 ];
 
+const AnimatedLogoMounted = withMounted(AnimatedLogo);
+
 export default function Component() {
   const main = useRef(null);
-  const [mounted, setMounted] = React.useState(false);
-  React.useEffect(() => {
-    setMounted(true);
-  }, []);
 
   const scrollToBottom = useCallback(() => {
     main && main.current && main.current.scrollIntoView({ behavior: "smooth" });
@@ -38,7 +37,7 @@ export default function Component() {
           <Scroller scrollToBottom={scrollToBottom}>
             {({ pct }) => (
               <>
-                {mounted && <AnimatedLogo pct={pct} />}
+                <AnimatedLogoMounted pct={pct} />
 
                 <JumpTo
                   variant="info"
