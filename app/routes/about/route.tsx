@@ -6,32 +6,111 @@ export const meta: V2_MetaFunction = () => [
   {
     name: "description",
     content:
-      "Eric Bright — software developer who builds functional systems and brings ideas to life.",
+      "Eric Bright — Principal Software Engineer with 15+ years building products across frontend, backend, and infrastructure.",
   },
   { property: "og:title", content: "About | @ericbdev" },
   {
     property: "og:description",
     content:
-      "Eric Bright — software developer who builds functional systems and brings ideas to life.",
+      "Eric Bright — Principal Software Engineer with 15+ years building products across frontend, backend, and infrastructure.",
   },
   { property: "og:type", content: "profile" },
   { name: "twitter:card", content: "summary_large_image" },
   { name: "twitter:creator", content: "@ericbdev" },
 ];
 
-const sectionClass = cx(["mb-10"]);
-const headingClass = cx(["text-2xl", "font-bold", "font-display", "mb-4", "text-accent-dark"]);
-const bodyClass = cx(["text-base", "leading-relaxed", "text-gray-700"]);
+const skills = {
+  Languages: ["TypeScript", "Node.js", "Python", "GraphQL", "CSS", "HTML"],
+  Frameworks: [
+    "React",
+    "Redux / RTK",
+    "Remix",
+    "Tailwind CSS",
+    "Apollo",
+    "Styled Components",
+    "Pydantic",
+    "Pytest",
+  ],
+  Tools: ["AWS", "Docker", "Terraform", "Nx", "Webpack", "Figma", "OpenAI"],
+};
 
-const skills = [
-  "TypeScript",
-  "React",
-  "Remix",
-  "Node.js",
-  "Tailwind CSS",
-  "HTML & CSS",
-  "REST APIs",
-  "Git",
+const experience = [
+  {
+    company: "Siteimprove",
+    period: "2019 – Present",
+    roles: [
+      {
+        title: "Principal Software Engineer — MarketMuse",
+        period: "2024 – Present",
+        bullets: [
+          "Enabled a team of 7 engineers to stand up and deploy a secure, observable Lambda-based API — cutting delivery time from weeks to a day.",
+          "Remediated security posture of distributed AWS services to meet enterprise requirements, applying least-privilege principals and network isolation.",
+          "Reduced monthly authorization costs by nearly $10k USD.",
+        ],
+      },
+      {
+        title: "Lead Frontend Developer — MarketMuse",
+        period: "2021 – 2024",
+        bullets: [
+          "Migrated a monolithic React SPA into Nx and progressively abstracted features into a shared component system, improving stability and quality.",
+          "Built a GenAI writing assistant using proprietary SEO data and OpenAI to aid content creators.",
+          "Unified three separate products into one cohesive experience, leading two direct reports through the effort.",
+        ],
+      },
+      {
+        title: "Senior JavaScript Developer — MarketMuse",
+        period: "2019 – 2021",
+        bullets: [
+          "Migrated 50k users off custom auth systems, eliminating account-sharing abuse.",
+          "Created a Webpack templating system for painless transactional email updates.",
+          "Led a team of Python engineers to rebuild a BFFE platform from Node.js, improving reliability and stability.",
+        ],
+      },
+    ],
+  },
+  {
+    company: "Freelance",
+    period: "2018 – 2019",
+    roles: [
+      {
+        title: "Independent Contractor",
+        period: "",
+        bullets: [
+          "Built a bespoke Shopify Plus theme for Lammles.",
+          "Developed a React-based checkout for BigCommerce on the One Page Checkout framework.",
+        ],
+      },
+    ],
+  },
+  {
+    company: "Pixel Union",
+    period: "2015 – 2018",
+    roles: [
+      {
+        title: "Developer",
+        period: "",
+        bullets: [
+          "Built an in-house automation tool to build and ship Shopify themes.",
+          "Developed a library to convert prices across currencies using Shopify rates.",
+          "Built and maintained themes generating hundreds of thousands of dollars in sales.",
+        ],
+      },
+    ],
+  },
+  {
+    company: "Design Shopp",
+    period: "2012 – 2015",
+    roles: [
+      {
+        title: "Developer",
+        period: "",
+        bullets: [
+          "Built custom WordPress themes as CMS solutions for businesses.",
+          "Developed cross-device native applications using Cordova with custom REST endpoints.",
+        ],
+      },
+    ],
+  },
 ];
 
 const links = [
@@ -47,34 +126,109 @@ export default function Component() {
         About
       </h1>
 
-      <div className={sectionClass}>
-        <p className={cx([bodyClass, "text-lg", "mb-4"])}>
-          I'm Eric — a software developer who enjoys building functional systems
-          and bringing ideas to life.
+      {/* Bio */}
+      <div className="mb-14">
+        <p className="text-lg leading-relaxed text-gray-700 mb-4">
+          I'm Eric — a Principal Software Engineer based in Canada with 15+
+          years of experience building products across the full stack. My work
+          spans frontend architecture, backend systems, cloud infrastructure, and
+          everything in between.
         </p>
-        <p className={bodyClass}>
-          This site is more playground than portfolio. I use it to practice, experiment,
-          and occasionally ship my own ideas. I care about clean code, good UX, and
-          systems that actually work.
+        <p className="text-base leading-relaxed text-gray-600">
+          Right now I'm at{" "}
+          <span className="text-accent-dark font-medium">
+            MarketMuse (Siteimprove)
+          </span>
+          , where I work on platform infrastructure, developer experience, and
+          the occasional GenAI feature. This site is my own corner of the
+          internet — a playground for ideas I want to build and ship outside of
+          work.
         </p>
       </div>
 
-      <div className={sectionClass}>
-        <h2 className={headingClass}>Technologies</h2>
-        <ul className="flex flex-wrap gap-2">
-          {skills.map((skill) => (
-            <li
-              key={skill}
-              className="px-3 py-1 rounded-full border border-accent-base text-accent-dark text-sm font-medium"
-            >
-              {skill}
-            </li>
+      {/* Skills */}
+      <div className="mb-14">
+        <h2 className="text-2xl font-bold font-display mb-6 text-accent-dark">
+          Skills
+        </h2>
+        <div className="flex flex-col gap-4">
+          {Object.entries(skills).map(([category, items]) => (
+            <div key={category} className="flex flex-col sm:flex-row sm:items-start gap-2">
+              <span className="text-sm font-medium text-gray-400 w-28 shrink-0 pt-1">
+                {category}
+              </span>
+              <ul className="flex flex-wrap gap-2">
+                {items.map((skill) => (
+                  <li
+                    key={skill}
+                    className="px-3 py-1 rounded-full border border-accent-base text-accent-dark text-sm font-medium"
+                  >
+                    {skill}
+                  </li>
+                ))}
+              </ul>
+            </div>
           ))}
-        </ul>
+        </div>
       </div>
 
-      <div className={sectionClass}>
-        <h2 className={headingClass}>Find me</h2>
+      {/* Experience */}
+      <div className="mb-14">
+        <h2 className="text-2xl font-bold font-display mb-8 text-accent-dark">
+          Experience
+        </h2>
+        <div className="flex flex-col gap-10">
+          {experience.map(({ company, period, roles }) => (
+            <div key={company}>
+              <div className="flex items-baseline justify-between mb-4">
+                <h3 className="text-xl font-bold font-display">{company}</h3>
+                <span className="text-sm text-gray-400">{period}</span>
+              </div>
+              <div className="flex flex-col gap-6 pl-4 border-l border-gray-100">
+                {roles.map((role) => (
+                  <div key={role.title}>
+                    <div className="flex items-baseline justify-between mb-2">
+                      <p className="font-medium text-gray-800">{role.title}</p>
+                      {role.period && (
+                        <span className="text-sm text-gray-400">
+                          {role.period}
+                        </span>
+                      )}
+                    </div>
+                    <ul className="flex flex-col gap-2">
+                      {role.bullets.map((bullet, i) => (
+                        <li
+                          key={i}
+                          className="text-sm text-gray-600 leading-relaxed pl-4 relative before:content-['–'] before:absolute before:left-0 before:text-accent-base"
+                        >
+                          {bullet}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Education */}
+      <div className="mb-14">
+        <h2 className="text-2xl font-bold font-display mb-4 text-accent-dark">
+          Education
+        </h2>
+        <p className="text-gray-700">
+          DEC in Publication Design &amp; Hypermedia Technology
+        </p>
+        <p className="text-sm text-gray-400">John Abbott College, 2009</p>
+      </div>
+
+      {/* Find me */}
+      <div>
+        <h2 className="text-2xl font-bold font-display mb-4 text-accent-dark">
+          Find me
+        </h2>
         <ul className="flex flex-col gap-2">
           {links.map(({ label, href }) => (
             <li key={label}>
