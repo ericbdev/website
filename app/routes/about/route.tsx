@@ -6,13 +6,13 @@ export const meta: V2_MetaFunction = () => [
   {
     name: "description",
     content:
-      "Eric Bright — Principal Software Engineer with 15+ years building products across frontend, backend, and infrastructure.",
+      "Eric Bright — full stack developer with a passion for user experience and building tools people actually use.",
   },
   { property: "og:title", content: "About | @ericbdev" },
   {
     property: "og:description",
     content:
-      "Eric Bright — Principal Software Engineer with 15+ years building products across frontend, backend, and infrastructure.",
+      "Eric Bright — full stack developer with a passion for user experience and building tools people actually use.",
   },
   { property: "og:type", content: "profile" },
   { name: "twitter:card", content: "summary_large_image" },
@@ -20,11 +20,11 @@ export const meta: V2_MetaFunction = () => [
 ];
 
 const skills = {
-  Languages: ["TypeScript", "Node.js", "Python", "GraphQL", "CSS", "HTML"],
+  Languages: ["TypeScript", "Python", "Node.js", "GraphQL", "CSS", "HTML"],
   Frameworks: [
     "React",
-    "Redux / RTK",
     "Remix",
+    "Redux / RTK",
     "Tailwind CSS",
     "Apollo",
     "Styled Components",
@@ -129,20 +129,25 @@ export default function Component() {
       {/* Bio */}
       <div className="mb-14">
         <p className="text-lg leading-relaxed text-gray-700 mb-4">
-          I'm Eric — a Principal Software Engineer based in Canada with 15+
-          years of experience building products across the full stack. My work
-          spans frontend architecture, backend systems, cloud infrastructure, and
-          everything in between.
+          At my heart I'm a full stack developer. My passion is user experience
+          — creating tools that people actually want to use, whether that's a
+          graphical interface, a command line application, or a suite of APIs.
+        </p>
+        <p className="text-base leading-relaxed text-gray-600 mb-4">
+          My roots are in frontend development, but I've built up real depth in
+          backend and infrastructure over the years. That range lets me
+          understand the full end-to-end cycle regardless of where the work
+          lives in the stack.
         </p>
         <p className="text-base leading-relaxed text-gray-600">
-          Right now I'm at{" "}
+          TypeScript is my primary language — that's where my strength is.
+          Python is my second, and I reach for it often. Right now I'm a
+          Principal Software Engineer at{" "}
           <span className="text-accent-dark font-medium">
             MarketMuse (Siteimprove)
           </span>
-          , where I work on platform infrastructure, developer experience, and
-          the occasional GenAI feature. This site is my own corner of the
-          internet — a playground for ideas I want to build and ship outside of
-          work.
+          , and this site is my own corner of the internet to build and ship
+          ideas outside of work.
         </p>
       </div>
 
