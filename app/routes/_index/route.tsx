@@ -41,27 +41,67 @@ export const meta: V2_MetaFunction = () => [
 
 export default function Component() {
   const main = useRef(null);
-  const containerRef = useRef<HTMLDivElement>(null);
-  const hasTriggered = useRef(false);
+  const scrollState = useRef<"hero" | "scrolling" | "content">("hero");
   const touchStartY = useRef<number | null>(null);
 
+  const getHeroHeight = useCallback(() => window.innerHeight * 4, []);
+
   const scrollToBottom = useCallback(() => {
-    main && main.current && main.current.scrollIntoView({ behavior: "smooth" });
-  }, [main]);
+    window.scrollTo({
+      top: document.documentElement.scrollHeight,
+      behavior: "smooth",
+    });
+  }, []);
+
+  const scrollToTop = useCallback(() => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, []);
 
   useEffect(() => {
-    const container = containerRef.current;
-    if (!container) return;
+    const html = document.documentElement;
+    html.style.scrollBehavior = "smooth";
+    html.style.overscrollBehavior = "none";
+    return () => {
+      html.style.scrollBehavior = "";
+      html.style.overscrollBehavior = "";
+    };
+  }, []);
 
-    const triggerScroll = () => {
-      if (hasTriggered.current) return;
-      hasTriggered.current = true;
-      scrollToBottom();
+  useEffect(() => {
+    scrollState.current = window.scrollY < 10 ? "hero" : "content";
+  }, []);
+
+  useEffect(() => {
+    let scrollEndTimer: ReturnType<typeof setTimeout> | null = null;
+
+    const resolveScrollEnd = () => {
+      if (window.scrollY < 10) {
+        scrollState.current = "hero";
+      } else {
+        scrollState.current = "content";
+      }
+    };
+
+    const scheduleScrollEnd = () => {
+      if (scrollEndTimer) clearTimeout(scrollEndTimer);
+      scrollEndTimer = setTimeout(resolveScrollEnd, 150);
     };
 
     const handleWheel = (e: WheelEvent) => {
-      if (hasTriggered.current) return;
-      if (e.deltaY > 0) triggerScroll();
+      if (scrollState.current === "scrolling") return;
+
+      if (scrollState.current === "hero" && e.deltaY > 0) {
+        scrollState.current = "scrolling";
+        scrollToBottom();
+        scheduleScrollEnd();
+      } else if (scrollState.current === "content" && e.deltaY < 0) {
+        const heroHeight = getHeroHeight();
+        if (window.scrollY <= heroHeight + 100) {
+          scrollState.current = "scrolling";
+          scrollToTop();
+          scheduleScrollEnd();
+        }
+      }
     };
 
     const handleTouchStart = (e: TouchEvent) => {
@@ -69,46 +109,56 @@ export default function Component() {
     };
 
     const handleTouchMove = (e: TouchEvent) => {
-      if (hasTriggered.current || touchStartY.current === null) return;
+      if (scrollState.current === "scrolling" || touchStartY.current === null)
+        return;
       const deltaY = touchStartY.current - e.touches[0].clientY;
-      if (deltaY > 10) triggerScroll();
-    };
 
-    const handleScroll = () => {
-      if (container.scrollTop === 0) {
-        hasTriggered.current = false;
+      if (scrollState.current === "hero" && deltaY > 10) {
+        scrollState.current = "scrolling";
+        scrollToBottom();
+        scheduleScrollEnd();
+      } else if (scrollState.current === "content" && deltaY < -10) {
+        const heroHeight = getHeroHeight();
+        if (window.scrollY <= heroHeight + 100) {
+          scrollState.current = "scrolling";
+          scrollToTop();
+          scheduleScrollEnd();
+        }
       }
     };
 
-    container.addEventListener("wheel", handleWheel, { passive: true });
-    container.addEventListener("touchstart", handleTouchStart, { passive: true });
-    container.addEventListener("touchmove", handleTouchMove, { passive: true });
-    container.addEventListener("scroll", handleScroll, { passive: true });
+    const handleScroll = () => {
+      if (scrollState.current === "scrolling") {
+        scheduleScrollEnd();
+      }
+    };
+
+    window.addEventListener("wheel", handleWheel, { passive: true });
+    window.addEventListener("touchstart", handleTouchStart, { passive: true });
+    window.addEventListener("touchmove", handleTouchMove, { passive: true });
+    window.addEventListener("scroll", handleScroll, { passive: true });
 
     return () => {
-      container.removeEventListener("wheel", handleWheel);
-      container.removeEventListener("touchstart", handleTouchStart);
-      container.removeEventListener("touchmove", handleTouchMove);
-      container.removeEventListener("scroll", handleScroll);
+      window.removeEventListener("wheel", handleWheel);
+      window.removeEventListener("touchstart", handleTouchStart);
+      window.removeEventListener("touchmove", handleTouchMove);
+      window.removeEventListener("scroll", handleScroll);
+      if (scrollEndTimer) clearTimeout(scrollEndTimer);
     };
-  }, [scrollToBottom]);
+  }, [scrollToBottom, scrollToTop, getHeroHeight]);
 
   return (
     <div
-      ref={containerRef}
       className={cx([
         "relative",
         "h-full",
         "overflow-[inherit]",
         "-mt-[76px]",
-        "snap-y",
-        "snap-mandatory",
-        "scroll-smooth",
       ])}
     >
-      <div className={cx(["h-[400vh]", "snap-start"])}>
+      <div className={cx(["h-[400vh]"])}>
         <Suspense>
-          <Scroller scrollToBottom={scrollToBottom}>
+          <Scroller>
             {({ pct }) => (
               <>
                 <AnimatedLogoMounted pct={pct} />
@@ -149,7 +199,7 @@ export default function Component() {
         </Suspense>
       </div>
       <div
-        className={cx(["relative", "w-full", "min-h-screen", "snap-start"])}
+        className={cx(["relative", "w-full", "min-h-screen"])}
         ref={main}
       >
         <div
