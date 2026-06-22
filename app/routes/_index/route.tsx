@@ -42,6 +42,7 @@ export const meta: V2_MetaFunction = () => [
 export default function Component() {
   const main = useRef(null);
   const scrollState = useRef<"hero" | "scrolling" | "content">("hero");
+  const scrollTarget = useRef<"top" | "bottom" | null>(null);
   const touchStartY = useRef<number | null>(null);
 
   const getHeroHeight = useCallback(() => window.innerHeight * 4, []);
@@ -75,10 +76,22 @@ export default function Component() {
     let scrollEndTimer: ReturnType<typeof setTimeout> | null = null;
 
     const resolveScrollEnd = () => {
-      if (window.scrollY < 10) {
+      const maxScroll =
+        document.documentElement.scrollHeight - window.innerHeight;
+
+      if (scrollTarget.current === "top" && window.scrollY < 10) {
         scrollState.current = "hero";
-      } else {
+        scrollTarget.current = null;
+      } else if (
+        scrollTarget.current === "bottom" &&
+        window.scrollY >= maxScroll - 10
+      ) {
         scrollState.current = "content";
+        scrollTarget.current = null;
+      } else if (scrollTarget.current) {
+        if (scrollTarget.current === "top") scrollToTop();
+        else scrollToBottom();
+        scheduleScrollEnd();
       }
     };
 
@@ -88,16 +101,23 @@ export default function Component() {
     };
 
     const handleWheel = (e: WheelEvent) => {
-      if (scrollState.current === "scrolling") return;
+      if (scrollState.current === "scrolling") {
+        e.preventDefault();
+        return;
+      }
 
       if (scrollState.current === "hero" && e.deltaY > 0) {
+        e.preventDefault();
         scrollState.current = "scrolling";
+        scrollTarget.current = "bottom";
         scrollToBottom();
         scheduleScrollEnd();
       } else if (scrollState.current === "content" && e.deltaY < 0) {
         const heroHeight = getHeroHeight();
         if (window.scrollY <= heroHeight + 100) {
+          e.preventDefault();
           scrollState.current = "scrolling";
+          scrollTarget.current = "top";
           scrollToTop();
           scheduleScrollEnd();
         }
@@ -109,18 +129,25 @@ export default function Component() {
     };
 
     const handleTouchMove = (e: TouchEvent) => {
-      if (scrollState.current === "scrolling" || touchStartY.current === null)
+      if (scrollState.current === "scrolling") {
+        e.preventDefault();
         return;
+      }
+      if (touchStartY.current === null) return;
       const deltaY = touchStartY.current - e.touches[0].clientY;
 
       if (scrollState.current === "hero" && deltaY > 10) {
+        e.preventDefault();
         scrollState.current = "scrolling";
+        scrollTarget.current = "bottom";
         scrollToBottom();
         scheduleScrollEnd();
       } else if (scrollState.current === "content" && deltaY < -10) {
         const heroHeight = getHeroHeight();
         if (window.scrollY <= heroHeight + 100) {
+          e.preventDefault();
           scrollState.current = "scrolling";
+          scrollTarget.current = "top";
           scrollToTop();
           scheduleScrollEnd();
         }
@@ -133,9 +160,9 @@ export default function Component() {
       }
     };
 
-    window.addEventListener("wheel", handleWheel, { passive: true });
+    window.addEventListener("wheel", handleWheel, { passive: false });
     window.addEventListener("touchstart", handleTouchStart, { passive: true });
-    window.addEventListener("touchmove", handleTouchMove, { passive: true });
+    window.addEventListener("touchmove", handleTouchMove, { passive: false });
     window.addEventListener("scroll", handleScroll, { passive: true });
 
     return () => {
