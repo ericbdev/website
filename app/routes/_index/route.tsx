@@ -20,7 +20,23 @@ const iconLinkClassnames = cx([
 ]);
 
 export const meta: V2_MetaFunction = () => [
-  { title: "Home | Portfolio | @ericbdev (Eric B)" },
+  { title: "@ericbdev — Eric Bright" },
+  {
+    name: "description",
+    content:
+      "Eric Bright — software developer who builds functional systems and brings ideas to life.",
+  },
+  { property: "og:title", content: "@ericbdev — Eric Bright" },
+  {
+    property: "og:description",
+    content:
+      "Eric Bright — software developer who builds functional systems and brings ideas to life.",
+  },
+  { property: "og:type", content: "website" },
+  { property: "og:image", content: "/og-image.png" },
+  { name: "twitter:card", content: "summary_large_image" },
+  { name: "twitter:site", content: "@ericbdev" },
+  { name: "twitter:creator", content: "@ericbdev" },
 ];
 
 export default function Component() {
@@ -95,9 +111,9 @@ export default function Component() {
             "-translate-x-1/2",
           ])}
         >
-          Hi! I'm Eric, I like to build functional systems and bringing ideas to
-          life. This is really more a play ground for me than anything. I like
-          to practice, and sometimes get my own ideas to life.
+          Hi! I'm Eric. I like to build functional systems and bring ideas to
+          life. This is more of a playground for me than anything — I like to
+          practice and sometimes ship my own ideas.
         </div>
       </div>
     </div>
