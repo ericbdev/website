@@ -1,4 +1,4 @@
-import React, { useRef, lazy, Suspense, useCallback } from "react";
+import React, { useRef, useEffect, lazy, Suspense, useCallback } from "react";
 import type { V2_MetaFunction } from "@remix-run/node";
 import cx from "classnames";
 import { GitHub, Twitter, Linkedin } from "react-feather";
@@ -41,19 +41,69 @@ export const meta: V2_MetaFunction = () => [
 
 export default function Component() {
   const main = useRef(null);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const hasTriggered = useRef(false);
+  const touchStartY = useRef<number | null>(null);
 
   const scrollToBottom = useCallback(() => {
     main && main.current && main.current.scrollIntoView({ behavior: "smooth" });
   }, [main]);
 
+  useEffect(() => {
+    const container = containerRef.current;
+    if (!container) return;
+
+    const triggerScroll = () => {
+      if (hasTriggered.current) return;
+      hasTriggered.current = true;
+      scrollToBottom();
+    };
+
+    const handleWheel = (e: WheelEvent) => {
+      if (hasTriggered.current) return;
+      if (e.deltaY > 0) triggerScroll();
+    };
+
+    const handleTouchStart = (e: TouchEvent) => {
+      touchStartY.current = e.touches[0].clientY;
+    };
+
+    const handleTouchMove = (e: TouchEvent) => {
+      if (hasTriggered.current || touchStartY.current === null) return;
+      const deltaY = touchStartY.current - e.touches[0].clientY;
+      if (deltaY > 10) triggerScroll();
+    };
+
+    const handleScroll = () => {
+      if (container.scrollTop === 0) {
+        hasTriggered.current = false;
+      }
+    };
+
+    container.addEventListener("wheel", handleWheel, { passive: true });
+    container.addEventListener("touchstart", handleTouchStart, { passive: true });
+    container.addEventListener("touchmove", handleTouchMove, { passive: true });
+    container.addEventListener("scroll", handleScroll, { passive: true });
+
+    return () => {
+      container.removeEventListener("wheel", handleWheel);
+      container.removeEventListener("touchstart", handleTouchStart);
+      container.removeEventListener("touchmove", handleTouchMove);
+      container.removeEventListener("scroll", handleScroll);
+    };
+  }, [scrollToBottom]);
+
   return (
     <div
+      ref={containerRef}
       className={cx([
         "relative",
         "h-full",
         "overflow-[inherit]",
         "-mt-[76px]",
         "snap-y",
+        "snap-mandatory",
+        "scroll-smooth",
       ])}
     >
       <div className={cx(["h-[400vh]", "snap-start"])}>
@@ -99,7 +149,7 @@ export default function Component() {
         </Suspense>
       </div>
       <div
-        className={cx(["relative", "w-full", "min-h-screen", "snap-center"])}
+        className={cx(["relative", "w-full", "min-h-screen", "snap-start"])}
         ref={main}
       >
         <div
