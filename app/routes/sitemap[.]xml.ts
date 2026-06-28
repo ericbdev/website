@@ -5,6 +5,7 @@ const BASE_URL = "https://ericbdev.com";
 const routes = [
   { path: "/", priority: "1.0", changefreq: "monthly" },
   { path: "/about", priority: "0.8", changefreq: "monthly" },
+  { path: "/projects", priority: "0.8", changefreq: "monthly" },
 ];
 
 export const loader: LoaderFunction = () => {
