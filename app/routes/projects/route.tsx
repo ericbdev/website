@@ -24,19 +24,15 @@ const projects = [
     description:
       "A personal app for tracking and sharing craft beverage locations — breweries, bars, distilleries — on an interactive map. Built for discovering new spots, rating visits, and sharing favorites with friends.",
     tech: ["React", "TypeScript", "Convex", "Google Maps", "Clerk"],
-    links: {
-      github: "https://github.com/ericbdev/brew-map-app",
-    },
+    sourceVisibility: "Private" as const,
+    url: "https://thebrewmap.app/",
   },
   {
     name: "ericbdev.com",
     description:
       "This website — a minimal portfolio and resume site. Serves as a playground for trying out ideas and shipping things outside of work.",
     tech: ["Remix", "React", "TypeScript", "Tailwind CSS"],
-    links: {
-      github: "https://github.com/ericbdev/website",
-      live: "https://ericbdev.com",
-    },
+    sourceVisibility: "Private" as const,
   },
 ];
 
@@ -74,25 +70,18 @@ export default function Component() {
                 </li>
               ))}
             </ul>
-            <div className="flex gap-4">
-              {project.links.github && (
+            <div className="flex items-center gap-4">
+              <span className="text-xs text-gray-400">
+                {project.sourceVisibility} source
+              </span>
+              {project.url && (
                 <a
-                  href={project.links.github}
+                  href={project.url}
                   target="_blank"
                   rel="noreferrer"
                   className="text-accent-base hover:text-accent-dark transition-colors duration-300 underline underline-offset-2 text-sm"
                 >
-                  GitHub
-                </a>
-              )}
-              {"live" in project.links && project.links.live && (
-                <a
-                  href={project.links.live}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="text-accent-base hover:text-accent-dark transition-colors duration-300 underline underline-offset-2 text-sm"
-                >
-                  Live site
+                  Visit site
                 </a>
               )}
             </div>
