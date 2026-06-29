@@ -16,14 +16,6 @@ export const meta: V2_MetaFunction = () => [
   { property: "og:type", content: "website" },
   { name: "twitter:card", content: "summary_large_image" },
   { name: "twitter:creator", content: "@ericbdev" },
-  {
-    property: "og:see_also",
-    content: "https://github.com/ericbdev/brew-map-app",
-  },
-  {
-    property: "og:see_also",
-    content: "https://github.com/ericbdev/website",
-  },
 ];
 
 const projects = [
@@ -33,6 +25,7 @@ const projects = [
       "A personal app for tracking and sharing craft beverage locations — breweries, bars, distilleries — on an interactive map. Built for discovering new spots, rating visits, and sharing favorites with friends.",
     tech: ["React", "TypeScript", "Convex", "Google Maps", "Clerk"],
     url: "https://thebrewmap.app/",
+    github: "https://github.com/ericbdev/brew-map-app",
   },
   {
     name: "ericbdev.com",
@@ -40,6 +33,7 @@ const projects = [
       "This website — a minimal portfolio and resume site. Serves as a playground for trying out ideas and shipping things outside of work.",
     tech: ["Remix", "React", "TypeScript", "Tailwind CSS"],
     url: "https://ericbdev.com",
+    github: "https://github.com/ericbdev/website",
   },
 ];
 
