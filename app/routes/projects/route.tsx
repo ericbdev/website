@@ -30,10 +30,11 @@ const projects = [
   {
     name: "ericbdev.com",
     description:
-      "This website — a minimal portfolio and resume site. Serves as a playground for trying out ideas and shipping things outside of work.",
+      "This website — a minimal portfolio and resume site. Serves as a playground for trying out ideas and shipping things outside of work. My favorite part was writing the Delaunay triangulation and animation of the logotype.",
     tech: ["Remix", "React", "TypeScript", "Tailwind CSS"],
     url: "https://ericbdev.com",
     github: "https://github.com/ericbdev/website",
+    showGithub: true,
   },
 ];
 
@@ -71,16 +72,28 @@ export default function Component() {
                 </li>
               ))}
             </ul>
-            {project.url && (
-              <a
-                href={project.url}
-                target="_blank"
-                rel="noreferrer"
-                className="text-accent-base hover:text-accent-dark transition-colors duration-300 underline underline-offset-2 text-sm"
-              >
-                Visit site
-              </a>
-            )}
+            <div className="flex gap-4">
+              {project.url && (
+                <a
+                  href={project.url}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="text-accent-base hover:text-accent-dark transition-colors duration-300 underline underline-offset-2 text-sm"
+                >
+                  Visit site
+                </a>
+              )}
+              {"showGithub" in project && project.showGithub && (
+                <a
+                  href={project.github}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="text-accent-base hover:text-accent-dark transition-colors duration-300 underline underline-offset-2 text-sm"
+                >
+                  GitHub
+                </a>
+              )}
+            </div>
           </div>
         ))}
       </div>
