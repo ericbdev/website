@@ -16,6 +16,14 @@ export const meta: V2_MetaFunction = () => [
   { property: "og:type", content: "website" },
   { name: "twitter:card", content: "summary_large_image" },
   { name: "twitter:creator", content: "@ericbdev" },
+  {
+    property: "og:see_also",
+    content: "https://github.com/ericbdev/brew-map-app",
+  },
+  {
+    property: "og:see_also",
+    content: "https://github.com/ericbdev/website",
+  },
 ];
 
 const projects = [
@@ -24,7 +32,6 @@ const projects = [
     description:
       "A personal app for tracking and sharing craft beverage locations — breweries, bars, distilleries — on an interactive map. Built for discovering new spots, rating visits, and sharing favorites with friends.",
     tech: ["React", "TypeScript", "Convex", "Google Maps", "Clerk"],
-    sourceVisibility: "Private" as const,
     url: "https://thebrewmap.app/",
   },
   {
@@ -32,7 +39,7 @@ const projects = [
     description:
       "This website — a minimal portfolio and resume site. Serves as a playground for trying out ideas and shipping things outside of work.",
     tech: ["Remix", "React", "TypeScript", "Tailwind CSS"],
-    sourceVisibility: "Private" as const,
+    url: "https://ericbdev.com",
   },
 ];
 
@@ -70,21 +77,16 @@ export default function Component() {
                 </li>
               ))}
             </ul>
-            <div className="flex items-center gap-4">
-              <span className="text-xs text-gray-400">
-                {project.sourceVisibility} source
-              </span>
-              {project.url && (
-                <a
-                  href={project.url}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="text-accent-base hover:text-accent-dark transition-colors duration-300 underline underline-offset-2 text-sm"
-                >
-                  Visit site
-                </a>
-              )}
-            </div>
+            {project.url && (
+              <a
+                href={project.url}
+                target="_blank"
+                rel="noreferrer"
+                className="text-accent-base hover:text-accent-dark transition-colors duration-300 underline underline-offset-2 text-sm"
+              >
+                Visit site
+              </a>
+            )}
           </div>
         ))}
       </div>
