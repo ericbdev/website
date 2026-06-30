@@ -30,7 +30,7 @@ const projects = [
   {
     name: "ericbdev.com",
     description:
-      "This website — a minimal portfolio and resume site. Serves as a playground for trying out ideas and shipping things outside of work. My favorite part was writing the Delaunay triangulation and animation of the logotype.",
+      "This website — a minimal portfolio and resume site. Serves as a playground for trying out ideas and shipping things outside of work. My favorite part was animating the logotype — picking start and end positions, mapping their x/y coordinates, and transforming the logo between them.",
     tech: ["Remix", "React", "TypeScript", "Tailwind CSS"],
     url: "https://ericbdev.com",
     github: "https://github.com/ericbdev/website",
