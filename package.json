@@ -2,6 +2,9 @@
   "name": "website-rebuild",
   "version": "1.0.0",
   "description": "My website",
+  "engines": {
+    "node": "26.x"
+  },
   "scripts": {
     "build": "remix build",
     "dev": "remix dev --manual",
