@@ -28,6 +28,26 @@ const projects = [
     github: "https://github.com/ericbdev/brew-map-app",
   },
   {
+    name: "Topic Model",
+    description:
+      "An SEO research tool that models the topics behind a search query from its results. A spaCy, TF-IDF and NMF pipeline scores phrases of up to three words (55% of the top keywords end up being phrases). Embedding search, corrected so common words don't dominate, finds related terms, and a language model judges each candidate before it counts. A live measurement showed the fixed similarity cut-off filtered nothing, so I replaced it with a nearest-neighbour rule: judge calls fell from 223 to 51 with the same 4 correct merges and no wrong ones. More than 50 ADRs, an evaluation harness and a spend guard keep changes measurable. It runs on spot EC2 behind a typed OpenAPI contract.",
+    tech: [
+      "Python",
+      "spaCy",
+      "AWS Bedrock",
+      "OpenAI",
+      "React",
+      "TypeScript",
+      "Terraform",
+    ],
+  },
+  {
+    name: "AI Agent Skill Tracker",
+    description:
+      "A catalog of AI agent skills and sources with slide-out panel routing and reducer-based state. It has a WCAG-compliant color system with contrast checks, rem-based type, and a dark mode toggle.",
+    tech: ["React", "TypeScript", "Accessibility"],
+  },
+  {
     name: "ericbdev.com",
     description:
       "This website — a minimal portfolio and resume site. Serves as a playground for trying out ideas and shipping things outside of work. My favorite part was animating the logotype — picking start and end positions, mapping their x/y coordinates, and transforming the logo between them.",

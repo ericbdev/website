@@ -6,13 +6,13 @@ export const meta: V2_MetaFunction = () => [
   {
     name: "description",
     content:
-      "Eric Bright — full stack developer with a passion for user experience and building tools people actually use.",
+      "Eric Bright — principal engineer working across web platforms, AWS and applied NLP, with a passion for building tools people actually use.",
   },
   { property: "og:title", content: "About | @ericbdev" },
   {
     property: "og:description",
     content:
-      "Eric Bright — full stack developer with a passion for user experience and building tools people actually use.",
+      "Eric Bright — principal engineer working across web platforms, AWS and applied NLP, with a passion for building tools people actually use.",
   },
   { property: "og:type", content: "profile" },
   { name: "twitter:card", content: "summary_large_image" },
@@ -21,17 +21,45 @@ export const meta: V2_MetaFunction = () => [
 
 const skills = {
   Languages: ["TypeScript", "Python", "Node.js", "GraphQL", "CSS", "HTML"],
-  Frameworks: [
+  "Web Platform": [
     "React",
-    "Remix",
+    "Remix (SSR)",
     "Redux / RTK",
+    "Nx",
+    "Turborepo",
+    "Design Systems",
+    "WCAG Accessibility",
     "Tailwind CSS",
     "Apollo",
-    "Styled Components",
-    "Pydantic",
-    "Pytest",
+    "Webpack",
+    "Vite",
   ],
-  Tools: ["AWS", "Docker", "Terraform", "Nx", "Webpack", "Figma", "OpenAI"],
+  "NLP & AI": [
+    "spaCy",
+    "TF-IDF / NMF",
+    "Embeddings & Similarity",
+    "LLM-as-Judge Evaluation",
+    "OpenAI",
+    "AWS Bedrock",
+  ],
+  Cloud: [
+    "AWS Lambda",
+    "API Gateway",
+    "DynamoDB",
+    "CloudFront / WAF",
+    "KMS",
+    "Kubernetes",
+    "Docker",
+    "Terraform",
+  ],
+  "Quality & Ops": [
+    "OpenTelemetry",
+    "X-Ray",
+    "Datadog",
+    "Pytest",
+    "Pydantic",
+    "Architecture Decision Records",
+  ],
 };
 
 const experience = [
@@ -43,8 +71,12 @@ const experience = [
         title: "Principal Software Engineer — MarketMuse",
         period: "2024 – Present",
         bullets: [
-          "Enabled a team of 7 engineers to stand up and deploy a secure, observable Lambda-based API — cutting delivery time from weeks to a day.",
-          "Remediated security posture of distributed AWS services to meet enterprise requirements, applying least-privilege principals and network isolation.",
+          "Built a paved-path API template, adopted by five Python services, so a team of 7 engineers could stand up a secure, observable Lambda-based API in a day instead of weeks. Fixes made upstream were backported to every service that used it.",
+          "Wrote design proposals and architecture decision records to align teams on configuration, data-model and service-boundary changes before building them.",
+          "Brought the security of distributed AWS services up to enterprise requirements: least-privilege IAM and KMS, encrypted logs, network isolation, and a CloudFront WAF.",
+          "Built an AI-adoption dashboard for leadership that collects per-user daily usage from multiple AI tools and rolls it up across orgs into adoption scores.",
+          "Moved an AI writing Chrome extension into a Turborepo monorepo, then added CI, smoke tests and regression coverage for document flows.",
+          "Wrote shared AI engineering standards (agents, skills and guardrails) that ship to other teams as a versioned plugin.",
           "Reduced monthly authorization costs by nearly $10k USD.",
         ],
       },
@@ -129,7 +161,8 @@ export default function Component() {
       {/* Bio */}
       <div className="mb-14">
         <p className="text-lg leading-relaxed text-gray-700 mb-4">
-          At my heart I'm a full stack developer. My passion is user experience
+          I've been building for the web for over 14 years. At my heart I'm a
+          full stack developer, and my passion is user experience
           — creating tools that people actually want to use, whether that's a
           graphical interface, a command line application, or a suite of APIs.
         </p>
