@@ -6,13 +6,13 @@ export const meta: V2_MetaFunction = () => [
   {
     name: "description",
     content:
-      "Eric Bright — full stack developer with a passion for user experience and building tools people actually use.",
+      "Eric Bright — principal engineer working across web platforms, AWS and applied NLP, with a passion for building tools people actually use.",
   },
   { property: "og:title", content: "About | @ericbdev" },
   {
     property: "og:description",
     content:
-      "Eric Bright — full stack developer with a passion for user experience and building tools people actually use.",
+      "Eric Bright — principal engineer working across web platforms, AWS and applied NLP, with a passion for building tools people actually use.",
   },
   { property: "og:type", content: "profile" },
   { name: "twitter:card", content: "summary_large_image" },
@@ -21,17 +21,49 @@ export const meta: V2_MetaFunction = () => [
 
 const skills = {
   Languages: ["TypeScript", "Python", "Node.js", "GraphQL", "CSS", "HTML"],
-  Frameworks: [
+  "Web Platform": [
     "React",
-    "Remix",
+    "Remix (SSR)",
+    "Next.js",
     "Redux / RTK",
+    "Nx",
+    "Turborepo",
+    "Design Systems",
+    "Storybook",
+    "WCAG Accessibility",
     "Tailwind CSS",
     "Apollo",
-    "Styled Components",
-    "Pydantic",
-    "Pytest",
+    "Webpack",
+    "Vite",
   ],
-  Tools: ["AWS", "Docker", "Terraform", "Nx", "Webpack", "Figma", "OpenAI"],
+  "NLP & AI": [
+    "spaCy",
+    "TF-IDF / NMF",
+    "Embeddings & Similarity",
+    "LLM-as-Judge Evaluation",
+    "OpenAI",
+    "AWS Bedrock",
+  ],
+  Cloud: [
+    "AWS Lambda",
+    "API Gateway",
+    "DynamoDB",
+    "CloudFront / WAF",
+    "KMS",
+    "Kubernetes",
+    "Docker",
+    "Terraform",
+  ],
+  "Quality & Ops": [
+    "OpenTelemetry",
+    "X-Ray",
+    "Datadog",
+    "Jest",
+    "Cypress",
+    "Pytest",
+    "Pydantic",
+    "Architecture Decision Records",
+  ],
 };
 
 const experience = [
@@ -43,8 +75,16 @@ const experience = [
         title: "Principal Software Engineer — MarketMuse",
         period: "2024 – Present",
         bullets: [
-          "Enabled a team of 7 engineers to stand up and deploy a secure, observable Lambda-based API — cutting delivery time from weeks to a day.",
-          "Remediated security posture of distributed AWS services to meet enterprise requirements, applying least-privilege principals and network isolation.",
+          "Built a paved-path API template, adopted by five Python services, so a team of 7 engineers could stand up a secure, observable Lambda-based API in a day instead of weeks. Fixes made upstream were backported to every service that used it.",
+          "Wrote design proposals and architecture decision records to align teams on configuration, data-model and service-boundary changes before building them.",
+          "Brought the security of distributed AWS services up to enterprise requirements: least-privilege IAM and KMS, encrypted logs, network isolation, and a CloudFront WAF.",
+          "Defined a measurement framework for AI adoption and built the dashboard leadership tracks it with. It collects daily per-user usage from several AI tools and scores adoption weekly, monthly and quarterly. Users in more than one org are now counted once.",
+          "Moved an LLM-assisted writing service onto the company Kubernetes platform, with synced secrets, liveness and readiness probes, Datadog tracing, a local kind cluster, and stage-to-production promotion.",
+          "Delivered a third-party AI search-visibility integration in the core product's large shared codebase, from KMS-encrypted secrets and Terraform CI/CD to a second production region for US customers.",
+          "Upgraded the product's frontend to React 18 and sped up its test suite by switching Jest to SWC.",
+          "Moved a Chrome extension into a Turborepo monorepo, then added CI, smoke tests and regression coverage for document flows.",
+          "Built a customer-provisioning CLI on the product's GraphQL API, with dry runs, JSON reports and feature-flag targeting.",
+          "Wrote shared AI engineering standards (agents, skills and guardrails) that ship to other teams as a versioned plugin.",
           "Reduced monthly authorization costs by nearly $10k USD.",
         ],
       },
@@ -52,9 +92,15 @@ const experience = [
         title: "Lead Frontend Developer — MarketMuse",
         period: "2021 – 2024",
         bullets: [
-          "Migrated a monolithic React SPA into Nx and progressively abstracted features into a shared component system, improving stability and quality.",
-          "Built a GenAI writing assistant using proprietary SEO data and OpenAI to aid content creators.",
+          "Set up the product's Nx and Next.js monorepo and moved a monolithic React SPA into it feature by feature. Kept it current through major Nx upgrades, with CI that builds, tests and deploys only the apps a change affects.",
+          "Built the shared component library in Storybook (layout, buttons, tables, navigation, badges), plus shared packages for styles, i18n and access control.",
+          "Made the app faster to load and render: split out heavy features and the rich-text editor into their own chunks, lazy-loaded third-party scripts and styles, and memoized expensive table and heatmap rendering.",
+          "Contributed to an open-source rich-text editor library built on Slate, then sped up string matching and highlighting in the product's editor.",
+          "Migrated the product's data tables to react-table v8, and set up Cypress end-to-end tests against a Dockerized build.",
+          "Added login and MFA alerting with geo-IP context to catch suspicious account activity.",
+          "Built an LLM-assisted writing service using proprietary SEO data and OpenAI to aid content creators.",
           "Unified three separate products into one cohesive experience, leading two direct reports through the effort.",
+          "Made over 6,000 commits to the product monorepo between 2021 and 2025.",
         ],
       },
       {
@@ -76,8 +122,8 @@ const experience = [
         title: "Independent Contractor",
         period: "",
         bullets: [
-          "Built a bespoke Shopify Plus theme for Lammles.",
-          "Developed a React-based checkout for BigCommerce on the One Page Checkout framework.",
+          "Built a custom Shopify Plus theme for a retail client.",
+          "Built a React checkout for BigCommerce stores.",
         ],
       },
     ],
@@ -93,6 +139,7 @@ const experience = [
           "Built an in-house automation tool to build and ship Shopify themes.",
           "Developed a library to convert prices across currencies using Shopify rates.",
           "Built and maintained themes generating hundreds of thousands of dollars in sales.",
+          "Contributed to the shared core library behind BigCommerce themes.",
         ],
       },
     ],
@@ -129,7 +176,8 @@ export default function Component() {
       {/* Bio */}
       <div className="mb-14">
         <p className="text-lg leading-relaxed text-gray-700 mb-4">
-          At my heart I'm a full stack developer. My passion is user experience
+          I've been building for the web for over 14 years. At my heart I'm a
+          full stack developer, and my passion is user experience
           — creating tools that people actually want to use, whether that's a
           graphical interface, a command line application, or a suite of APIs.
         </p>
